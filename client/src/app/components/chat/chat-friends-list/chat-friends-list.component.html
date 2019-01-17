@@ -1,0 +1,15 @@
+<ul>
+  <li *ngFor="let friend of friendsList" (click)="clicked(friend)">
+    <div class="usr-msg-details">
+      <div class="usr-ms-img">
+        <img [src]="friend.image_path" alt="">
+      </div>
+      <div class="usr-mg-info">
+        <h3>{{friend.prenom}} {{friend.nom}}</h3>
+        <p *ngIf="chatList">{{getLastMessageBetweenFriends(friend.id)}}</p>
+      </div>
+      <span *ngIf="chatList" class="posted_time">{{getLastMessageTime(friend.id) | date:'yyyy-MM-dd hh:mm'}}</span>
+      <!-- <span class="msg-notifc">1</span> -->
+    </div>
+  </li>
+</ul>

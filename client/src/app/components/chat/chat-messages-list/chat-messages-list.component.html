@@ -1,0 +1,17 @@
+<div class="message-bar-head">
+  <div class="usr-msg-details">
+    <div class="usr-ms-img">
+      <img src={{friend.image_path}} alt="">
+    </div>
+    <div class="usr-mg-info">
+      <h3>{{friend.prenom}} {{friend.nom}}</h3>
+      <p>{{friend.titre_profil}}</p>
+    </div>
+  </div>
+</div>
+
+<div class="messages-line" #scrollMe [scrollTop]="scrollMe.scrollHeight" id="style-4" style="margin-top: 100px">
+  <div class="chat-messages"  *ngFor="let message of messagesList">
+    <app-chat-message-item [message]="message" [friend]="friend"></app-chat-message-item>
+  </div>
+</div>

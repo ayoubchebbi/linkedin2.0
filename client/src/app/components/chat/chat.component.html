@@ -1,0 +1,30 @@
+<app-header></app-header>
+<section class="messages-page">
+  <div class="container">
+    <div class="messages-sec">
+      <div class="row">
+        <div class="col-lg-4 col-md-12 no-pdd">
+          <div class="msgs-list" id="style-4">
+            <div class="msg-title">
+              <h3>Messages</h3>
+            </div>
+            <div class="messages-list">
+              <app-chat-friends-list [user]="user" (onFriendSelected)="friendWasSelected($event)"></app-chat-friends-list>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-8 col-md-12 pd-right-none pd-left-none" >
+          <div class="main-conversation-box">
+            <div *ngIf="friend" class="messages-list">
+              <app-chat-messages-list [friend]="friend"></app-chat-messages-list>
+            </div>
+            <div class="message-send-area" >
+              <app-chat-message-form [friend]="friend"></app-chat-message-form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

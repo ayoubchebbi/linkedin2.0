@@ -1,0 +1,251 @@
+<app-header></app-header>
+<main>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <div class="main-section">
+    <div class="container">
+      <div class="main-section-data">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="filter-secs">
+              <div class="filter-heading">
+                <h3>Filters</h3>
+                <!--<a href="#" title="">Clear all filters</a>-->
+              </div><!--filter-heading end-->
+              <div class="paddy">
+                <app-bot></app-bot>
+                </div>
+            </div><!--filter-secs end-->
+          </div>
+
+
+          <div class="col-lg-8">
+            <div *ngIf="user.role===1" class="post-topbar">
+              <p class="h3">Post job</p>
+              <br>
+              <form [formGroup]="postForm" (ngSubmit)="create_Offre_emploi()">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="nomoffre"  formControlName="nomOffre"  placeholder="Offer name">
+                </div>
+                <div class="form-group">
+                  <textarea class="form-control" id="descOffre" rows="3" formControlName="descOffre" placeholder="job description" ></textarea>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="place"  formControlName="place"  placeholder="country" >
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="price"  formControlName="price"  placeholder="price" >
+                </div>
+                <div class="form-row">
+                  <div class="col-md-4 mb-3">
+                    <div class="input-group">
+                      <input type="text" style="text-transform:uppercase" class="form-control"  id="hashtag1"  formControlName="hashtag1"  placeholder="hashtag1" >
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <div class="input-group">
+                      <input type="text" style="text-transform:uppercase" class="form-control" id="hashtag2"  formControlName="hashtag2" aria-describedby="emailHelp" placeholder="hashtag2">
+                    </div>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <div class="input-group">
+                      <input type="text"  style="text-transform:uppercase" class="form-control" id="hashtag3"  formControlName="hashtag3" aria-describedby="emailHelp" placeholder="hashtag3">
+                    </div>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary pull-right">Submit</button>
+              </form>
+
+              <!--post-st end-->
+            </div>
+              <div class="posts-section">
+
+                <tr *ngFor="let offre of offre_emploi| fresh : filter | orderBy">
+                  <div class="post-bar">
+                    <div class="post_topbar">
+                      <div class="usy-dt">
+                        <img src={{offre.utilisateur.image_path}} height="50" alt="">
+                        <div class="usy-name">
+                          <h3><td>{{offre.utilisateur.nom}}</td></h3>
+                          <h3><td>{{offre.utilisateur.prenom}}</td></h3>
+                          <span><img src="/assets/images/clock.png" alt="">{{offre.date | date:'dd-MM-yyyy'}}</span>
+                        </div>
+                      </div>
+                      <div class="ed-opts">
+                        <div   *ngIf="user.id===offre.utilisateur.id" ><button (click)="clicked=true;offer_cli(offre)" class="btn btn-primary">Edit</button></div>
+                       <!-- <a href="#" title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
+                        <ul class="ed-options">
+                          <li><a (click)="update_Offre_emploi(offre)" title="">Edit Post</a></li>
+                          <li><a href="#" title="">Unsaved</a></li>
+                          <li><a href="#" title="">Unbid</a></li>
+                          <li><a href="#" title="">Close</a></li>
+                          <li><a href="#" title="">Hide</a></li>
+                        </ul>-->
+                      </div>
+                    </div>
+                    <div class="epi-sec">
+                      <ul class="descp">
+                        <li><img src="/assets/images/icon9.png" alt=""><span>{{offre.place}}</span></li>
+                      </ul>
+                      <ul class="bk-links">
+                        <li   *ngIf="user.id===offre.utilisateur.id" ><button (click)="delete_Offre_emploi(offre)" class="btn btn-danger">Delete</button></li>
+
+                        <li   *ngIf="user.id!=offre.utilisateur.id" (click)="create_Offre_utilisateur(offre)"><button  class="btn btn-primary">Quick apply</button></li>
+
+                      </ul>
+                    </div>
+                    <div class="job_descp">
+                      <h3><td>{{offre.nomOffre}}</td></h3>
+                      <ul class="job-dt">
+                        <li><a href="#" title="">Full Time</a></li>
+                        <li><span>${{offre.price}} / hr</span></li>
+                      </ul>
+                      <div   *ngIf="clicked===false" ><p><td>{{offre.descOffre}}</td></p></div>
+                      <div   *ngIf="clicked===true && user.id==offre.utilisateur.id && offer_clicked==offre" ><p><td>
+                        <form [formGroup]="postForm" (ngSubmit)="update_Offre_emploi(offre)" [ngFormOptions]="{ updateOn: 'submit' }">
+                        <input type="text" class="form-control" id="descOffre2"  formControlName="descOffre2" aria-describedby="emailHelp" placeholder="description de l'offre" ngModel="{{offre.descOffre}}" >
+                          <button type="submit" class="btn btn-success pull-right" (click)="update_Offre_emploi(offre);clicked=false">Edit offre</button>
+                        </form>
+                      </td>
+                        </p>
+                      </div>
+                      <ul class="skill-tags">
+                        <li><a href="#" title="">{{offre.hashtag1}}</a></li>
+                        <li><a href="#" title="">{{offre.hashtag2}}</a></li>
+                        <li><a href="#" title="">{{offre.hashtag3}}</a></li>
+                      </ul>
+                    </div>
+                    <!--<div class="job-status-bar">
+                      <ul class="like-com">
+                        <li>
+                          <a href="#"><i class="la la-heart"></i> Like</a>
+                          <img src="/assets/images/liked-img.png" alt="">
+                          <span>25</span>
+                        </li>
+                        <li><a href="#" title="" class="com"><img src="/assets/images/com.png" alt=""> Comment 15</a></li>
+                      </ul>
+                      <a><i class="la la-eye"></i>Views 50</a>
+                    </div>-->
+                  </div><!--post-bar end-->
+                </tr>
+                <!--
+                <div class="process-comm">
+                  <div class="spinner">
+                    <div class="bounce1"></div>
+                    <div class="bounce2"></div>
+                    <div class="bounce3"></div>
+                  </div>
+                </div>
+                -->
+              </div><!--posts-section end-->
+            <!--main-ws-sec end-->
+          </div>
+
+
+         <!-- <div class="col-lg-3">
+            <div class="right-sidebar">
+              <div class="widget widget-about">
+                <img src="/assets/images/wd-logo.png" alt="">
+                <h3>Track Time on Workwise</h3>
+                <span>Pay only for the Hours worked</span>
+                <div class="sign_link">
+                  <h3><a href="#" title="">Sign up</a></h3>
+                  <a href="#" title="">Learn More</a>
+                </div>
+              </div>
+              <div class="widget widget-jobs">
+                <div class="sd-title">
+                  <h3>Top Jobs</h3>
+                  <i class="la la-ellipsis-v"></i>
+                </div>
+                <div class="jobs-list">
+                  <div class="job-info">
+                    <div class="job-details">
+                      <h3>Senior Product Designer</h3>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                    </div>
+                    <div class="hr-rate">
+                      <span>$25/hr</span>
+                    </div>
+                  </div>
+                  <div class="job-info">
+                    <div class="job-details">
+                      <h3>Senior UI / UX Designer</h3>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                    </div>
+                    <div class="hr-rate">
+                      <span>$25/hr</span>
+                    </div>
+                  </div>
+                  <div class="job-info">
+                    <div class="job-details">
+                      <h3>Junior Seo Designer</h3>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                    </div>
+                    <div class="hr-rate">
+                      <span>$25/hr</span>
+                    </div>
+                  </div>
+                  <div class="job-info">
+                    <div class="job-details">
+                      <h3>Senior PHP Designer</h3>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                    </div>
+                    <div class="hr-rate">
+                      <span>$25/hr</span>
+                    </div>
+                  </div>
+                  <div class="job-info">
+                    <div class="job-details">
+                      <h3>Senior Developer Designer</h3>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                    </div>
+                    <div class="hr-rate">
+                      <span>$25/hr</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="widget widget-jobs">
+                <div class="sd-title">
+                  <h3>Most Viewed This Week</h3>
+                  <i class="la la-ellipsis-v"></i>
+                </div>
+                <div class="jobs-list">
+                  <div class="job-info">
+                    <div class="job-details">
+                      <h3>Senior Product Designer</h3>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                    </div>
+                    <div class="hr-rate">
+                      <span>$25/hr</span>
+                    </div>
+                  </div>
+                  <div class="job-info">
+                    <div class="job-details">
+                      <h3>Senior UI / UX Designer</h3>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                    </div>
+                    <div class="hr-rate">
+                      <span>$25/hr</span>
+                    </div>
+                  </div>
+                  <div class="job-info">
+                    <div class="job-details">
+                      <h3>Junior Seo Designer</h3>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit..</p>
+                    </div>
+                    <div class="hr-rate">
+                      <span>$25/hr</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- main-section-data end-->
+    </div>
+  </div>
+    </div>
+  </div>
+</main>

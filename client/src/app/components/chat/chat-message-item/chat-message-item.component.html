@@ -1,0 +1,23 @@
+<div class="main-message-box ta-right" *ngIf="message.user_from_id != friend.id" >
+  <div class="message-dt">
+    <div class="message-inner-dt">
+      <p style="width: 500px;margin-left: 150px;">{{message.message}}</p>
+    </div>
+    <span>{{message.send_on | date:'yyyy-MM-dd hh:mm' }}</span>
+  </div>
+  <div class="messg-usr-img">
+    <img src="{{user.image_path}}" alt="">
+  </div>
+</div>
+
+<div class="main-message-box st3"  *ngIf="message.user_from_id == friend.id">
+  <div class="message-dt st3">
+    <div class="message-inner-dt">
+      <p>{{message.message}}</p>
+    </div>
+    <span>{{message.send_on | date:'yyyy-MM-dd hh:mm' }}</span>
+  </div>
+  <div class="messg-usr-img">
+    <img src="{{friend.image_path}}" alt="">
+  </div>
+</div>

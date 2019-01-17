@@ -1,0 +1,75 @@
+
+<header>
+  <div class="container">
+    <div class="header-data">
+      <div class="logo">
+        <a [routerLink] ="['/dashboard']" title=""><img src="/assets/images/logo.png" alt=""></a>
+      </div><!--logo end-->
+      <div class="search-bar">
+
+      </div>
+
+      <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #1e1e1e;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" style="outline : none;">
+          <span class="navbar-toggler-icon " style=""><i class="fa fa-navicon" style="color: #fff;font-size: 24px;
+	color: #fff;
+	display: inline-block;
+	padding-top: 8px;
+	padding-left: 20px;
+float: right;margin-top: 0"></i></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li>
+              <a [routerLink] ="['/dashboard']" title="">
+                <span><img src="/assets/images/icon1.png" alt=""></span> Home
+              </a>
+            </li>
+            <li>
+              <a [routerLink] ="['/network']" title="">
+                <span><img src="/assets/images/icon4.png" alt=""></span> My Network
+              </a>
+            </li>
+            <li>
+              <a [routerLink] ="['/jobs']" title="">
+                <span><img src="/assets/images/icon5.png" alt=""></span> Jobs
+              </a>
+            </li>
+            <li>
+              <a [routerLink] ="['/messages']" title="" class="not-box-open">
+                <span><img src="/assets/images/icon6.png" alt=""></span> Messages
+              </a>
+            </li>
+            <li>
+              <a [routerLink] ="['/notification']" title="" class="not-box-open">
+                <span><img src="/assets/images/icon7.png" alt=""></span> Notification
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+
+
+
+
+
+
+      <div class="user-account">
+
+        <div class="dropdown" style="margin-top: 15%;position: relative;">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="background-color: #1e1e1e;border: 0px;outline : none;">
+            <img src={{user.image_path}} height="35" alt="">{{user.prenom}}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="http://localhost:4200/profile">Profile</a>
+            <a class="dropdown-item" [routerLink] ="['/settings']">Account Setting</a>
+            <a class="dropdown-item" [routerLink] ="['/']" (click)="logout()" >Logout</a>
+          </div>
+        </div>
+        <!--user-account-settingss end-->
+      </div>
+    </div><!--header-data end-->
+  </div>
+</header><!--header end-->

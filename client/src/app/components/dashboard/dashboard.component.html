@@ -1,0 +1,179 @@
+<app-header ></app-header>
+<main>
+  <div class="main-section">
+    <div class="container">
+      <div class="main-section-data">
+        <div class="row">
+          <div class="col-lg-3 col-md-4 pd-left-none no-pd">
+            <div class="main-left-sidebar no-margin">
+              <div class="user-data full-width">
+
+                <div class="user-profile">
+                  <div class="username-dt">
+                    <div class="usr-pic">
+                      <img src={{user.image_path}} alt="">
+                    </div>
+                  </div>
+                  <div class="user-specs">
+                    <h3> {{user.prenom}} {{user.nom}}</h3>
+                    <span>{{user.titre_profil}} </span>
+                  </div>
+                </div>
+                <ul class="user-fw-status">
+                  <!--
+                  <li>
+                    <h4>Following</h4>
+                    <span>34</span>
+                  </li>
+                  <li>
+                    <h4>Followers</h4>
+                    <span>155</span>
+                  </li>
+                  -->
+                  <li>
+                    <a [routerLink] ="['/profile']" title="">View Profile</a>
+                  </li>
+                </ul>
+              </div><!--user-data end-->
+              <div class="suggestions full-width">
+                <div class="sd-title">
+                  <h3>Suggestions</h3>
+                  <i class="la la-ellipsis-v"></i>
+                </div><!--sd-title end-->
+                <div class="suggestions-list">
+                  <div class="suggestion-usd" *ngFor="let notFriend of notFriends">
+                    <img src={{notFriend.image_path}} height="30" alt="">
+                    <div class="sgt-text">
+                    <!-- a href to the persons profile -->
+                       <h4><a [routerLink] = "['/profile',{'id': notFriend.id}]">{{notFriend.prenom}} {{notFriend.nom}} </a> </h4>
+                        <!--<h4><a href="http://localhost:4200/profile?id={{notFriend.id}}">{{notFriend.prenom}} {{notFriend.nom}} </a> </h4>-->
+                        <span>{{notFriend.titreProfil}}</span>
+                      </div>
+                     <!-- <span><i class="la la-plus"></i></span> -->
+                  </div>
+
+                  <div class="view-more">
+                    <a href="#" title="">View More</a>
+                  </div>
+                </div><!--suggestions-list end-->
+              </div><!--suggestions end-->
+            </div><!--main-left-sidebar end-->
+          </div>
+          <div class="col-lg-6 col-md-8 no-pd">
+            <div class="main-ws-sec">
+              <div class="post-topbar p-0">
+                <form [formGroup]="postForm" (ngSubmit)="create_postulation()">
+                  <div class="p-1">
+                    <textarea class="form-control rounded-0" (keydown.enter)="create_postulation()" formControlName="contenu" style="border: 0px;resize:none;" rows="3" placeholder="Express yourself,  {{user.prenom}}"></textarea>
+                  </div>
+                  <hr class="m-0">
+                  <div class="">
+
+                    <a title="emoji"><i class="la la-2x la-smile-o m-2"></i></a>
+                    <a title="image"><i class="la la-2x la-camera m-2"></i></a>
+                    <a title="video" class="ed-opts-open"><i class="la la-2x la-video-camera m-2"></i></a>
+
+                    <button type="submit" class="btn btn-primary btn-sm pull-right rounded-0 m-2">publish</button>
+                  </div>
+                </form>
+              </div>
+
+              <div *ngFor="let publication of publications| orderBy" >
+                <div class="posts-section" style="padding-bottom: 30px;" >
+                  <div class="posty">
+                    <div class="post-bar no-margin">
+                      <div class="post_topbar">
+                        <div class="usy-dt">
+                          <div class="user-picy">
+                            <img src="{{publication.utilisateur.image_path}}" alt="">
+                          </div>
+                          <div class="usy-name">
+                            <h3>{{publication.utilisateur.prenom}} {{publication.utilisateur.nom}}</h3>
+                            <span><img src="/assets/images/clock.png" alt=""> {{ publication.date | date }}</span>
+                          </div>
+                        </div>
+
+
+                        <div *ngIf="publication.utilisateur.id == user.id">
+
+                          <div class="ed-opts">
+                            <a title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
+
+                              <ul class="ed-options m-0 p-0 list-group">
+                                <li class="p-2 m-0 list-group-item-action"><a (click)="delete_postulation(publication)" title="Delete">Delete</a></li>
+                                <li class="p-2 m-0 list-group-item-action"><a (click)="toggle(publication)" title="Update">Update</a></li>
+                              </ul>
+
+                          </div>
+                        </div>
+
+
+
+                      </div>
+
+
+
+                      <div class="job_descp">
+
+
+                        <div *ngIf="show && !(publication.id!==idupdate)">
+                          <form [formGroup]="postForm2">
+                            <div class="p-1">
+                              <textarea class="form-control rounded-0" value="{{publication.contenu | emojify }}" (keydown.enter)="update_postulation(publication)" formControlName="contenu" style="border: 0px;resize:none;" rows="3"></textarea>
+                            </div>
+                          </form>
+                        </div>
+
+
+                        <div *ngIf="!show || !(publication.id===idupdate)" >
+                          <p>{{publication.contenu | emojify }}</p>
+                        </div>
+
+                      </div>
+
+
+
+
+
+                     <app-like [childMessage]="publication.id" ></app-like>
+                    </div><!--post-bar end-->
+                    <app-commentaire [childMessage]="publication.id" ></app-commentaire>
+                  </div>
+
+
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+          <div class="col-lg-3 pd-right-none no-pd">
+            <div class="right-sidebar">
+              <div class="widget widget-jobs">
+                <div class="sd-title">
+                  <h3>Top Jobs</h3>
+                  <i class="la la-ellipsis-v"></i>
+                </div>
+                <div class="jobs-list">
+                  <div class="job-info" *ngFor="let offre of offre_emploi">
+                    <div class="job-details">
+                      <h3>{{offre.nomOffre}}</h3>
+                      <p>{{offre.descOffre.substring(0,50)}}</p>
+                    </div>
+                    <div class="hr-rate">
+                      <span>{{offre.hashtag1}}</span>
+                    </div>
+                  </div><!--job-info end-->
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+

@@ -1,0 +1,5 @@
+.sidenav {
+  width: 280px;
+  position: fixed;
+  overflow-x: hidden;
+}

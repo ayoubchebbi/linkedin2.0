@@ -1,0 +1,18 @@
+mat-list-item:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+
+.friend-image-in-list {
+  width: 15% !important;
+  height: auto !important;
+}
+
+.friend-username-in-list {
+  font-size: 150% !important;
+}
+
+.friend-last-message-in-list{
+  color: grey !important;
+  font-style: italic !important;
+}

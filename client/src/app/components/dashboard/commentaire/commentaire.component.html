@@ -1,0 +1,59 @@
+<div class="comment-section">
+
+
+
+
+            <div *ngFor="let commentaire of commentaires " >
+              <div *ngIf="commentaire.publication === childMessage">
+                <div *ngIf="commentaire.utilisateur.id == user.id">
+                  <div class="ed-opts">
+                    <a title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
+                    <ul class="ed-options m-0 p-0 list-group">
+                      <li class="p-2 m-0 list-group-item-action"><a  (click)="delete_commentaire(commentaire)" title="Delete">Delete</a></li>
+                      <li class="p-2 list-group-item-action"><a   (click)="toggle(commentaire)" title="Update">Update</a></li>
+                    </ul>
+                  </div>
+                </div>
+
+
+                  <div class="bg-img">
+                    <a><img src="{{commentaire.utilisateur.image_path}}" height="40" alt=""></a>
+                  </div>
+
+                  <div class="comment">
+
+                    <div *ngIf="!show || !(commentaire.id===idupdate)" >
+                      <p class="bg-light rounded p-2 border m-2">{{commentaire.contenu}}</p>
+                    </div>
+
+                    <div *ngIf="show && !(commentaire.id!==idupdate)">
+                      <div class="comment_box m-1">
+                        <form [formGroup]="postForm2" style="width: 100%">
+                          <input type="text" placeholder="your comment" value="{{ commentaire.contenu }}" formControlName="contenu" (keydown.enter)="update_commentaire(commentaire)">
+                        </form>
+                      </div>
+                    </div>
+
+
+
+                    <span><img src="/assets/images/clock.png" alt=""> {{ commentaire.date | date}}</span>
+                  </div>
+
+
+
+
+              </div>
+            </div>
+
+
+    <div class="post-comment">
+      <div class="cm_img">
+        <img height="40" src="{{user.image_path}}" alt="">
+      </div>
+      <div class="comment_box">
+        <form [formGroup]="postForm" style="width: 100%">
+          <input type="text" placeholder="your comment"  formControlName="contenu" (keydown.enter)="create_commentaire()">
+        </form>
+      </div>
+  </div>
+</div>

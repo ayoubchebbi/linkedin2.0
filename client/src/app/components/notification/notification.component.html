@@ -1,0 +1,59 @@
+<app-header></app-header>
+
+
+
+<div class="wrapper">
+  <section class="profile-account-setting">
+    <div class="container">
+      <div class="account-tabs-setting">
+        <div class="row">
+
+
+
+          <div class="col-lg-3">
+            <div class="card">
+
+              <div class="card-body  ">
+                <h5 class="card-title"><strong>Notifications</strong></h5>
+                <p class="card-text">Vous êtes à jour. Revenez plus tard pour voir les dernières notifications
+                </p>
+              </div>
+
+              <div class="card-footer">
+                <p class="card-text">Améliorer vos notifications</p>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="col-lg-9">
+            <div class="acc-setting">
+              <h3>Notifications</h3>
+              <div class="notifications-list" *ngFor="let notification of notifications">
+                <a class="notfication-details">
+                  <div class="noty-user-img">
+                    <img src="{{notification.utilisateur.image_path}}" alt="">
+                  </div>
+                  <div class="notification-info">
+
+                    <h3><a [routerLink] = "['/profile',{'id': notification.utilisateur.id}]" title="">{{notification.utilisateur.prenom}} {{notification.utilisateur.nom}}</a> {{notification.objet}}</h3>
+                    <!--<h3><a href="http://localhost:4200/profile?id={{notification.utilisateur.id}}" title="">{{notification.utilisateur.prenom}} {{notification.utilisateur.nom}}</a> {{notification.objet}}</h3>-->
+
+                    <span>{{notification.date | date }}</span>
+                  </div><!--notification-info -->
+                </a><!--notfication-details end-->
+
+
+
+              </div><!--notifications-list end-->
+            </div><!--acc-setting end-->
+          </div>
+
+
+        </div>
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+      </div><!--account-tabs-setting end-->
+    </div>
+  </section>
+</div>

@@ -1,0 +1,28 @@
+<h1>Welcome to the Chat bot..</h1>
+<br/>
+<h1>say Hi!</h1>
+<div class="scroll" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+<ng-container *ngFor="let message of messages | async">
+
+  <div class="message"  [ngClass]="{ 'from': message.sentBy === 'bot',
+                                    'to':   message.sentBy === 'user' }">
+    {{ message.content }}
+  </div>
+
+
+</ng-container>
+</div>
+
+<div class="row">
+  <div class="col-8">
+    <div class="form-group">
+      <input class="form-control" [(ngModel)]="formValue" (keyup.enter)="sendMessage()" type="text" >
+    </div>
+  </div>
+  <div class="col-4">
+    <button (click)="sendMessage()" class="btn btn-danger">Send</button>
+  </div>
+</div>
+
+
+

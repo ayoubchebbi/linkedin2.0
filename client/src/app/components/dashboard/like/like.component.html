@@ -1,0 +1,10 @@
+<div class="job-status-bar">
+  <ul class="like-com">
+    <li>
+      <a (click)="create_like()" class="{{ liked ? 'text-danger' : '' }}"><i class="la la-heart"></i>{{ liked ? 'Unlike' : 'Like' }} </a>
+      <span class="ml-2">{{nb}}</span>
+    </li>
+    <li><a title="" class="com"><img src="/assets/images/com.png" alt=""> Comment {{nbcomment}}</a></li>
+
+  </ul>
+</div>

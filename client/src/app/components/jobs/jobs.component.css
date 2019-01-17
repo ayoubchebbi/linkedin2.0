@@ -1,0 +1,16 @@
+
+
+
+.contact-image{
+  text-align: center;
+}
+.contact-image img{
+  alignment: center;
+  border-radius: 6rem;
+  width: 11%;
+  transform: rotate(29deg);
+}
+
+.hash input{
+  float:left;
+}

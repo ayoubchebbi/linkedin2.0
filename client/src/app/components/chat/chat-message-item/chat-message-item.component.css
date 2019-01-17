@@ -1,0 +1,16 @@
+.itsMe{
+  border: solid 1px black;
+  border-radius: 5px;
+  background-color: rgba(44, 163, 79, 0.6);
+  width: 83vw;
+  vertical-align: middle;
+  float: right;
+}
+
+.notMe{
+  border: solid 1px black;
+  background-color: white;
+  border-radius: 5px;
+  width: 83vw;
+  vertical-align: middle;
+}

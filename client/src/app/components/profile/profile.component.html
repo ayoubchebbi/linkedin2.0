@@ -1,0 +1,917 @@
+<app-header></app-header>
+<section class="cover-sec">
+  <img src="/assets/images/resources/cover-img.jpg" alt="">
+</section>
+<main>
+  <div class="main-section">
+    <div class="container">
+      <div class="main-section-data">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="main-left-sidebar">
+              <div class="user_profile">
+                <div class="user-pro-img">
+                  <img src="{{user.image_path}}" height="200" alt="">
+                </div>
+                <!--user-pro-img end-->
+                <div class="user_pro_status">
+                  <ul class="flw-hr">
+                          <div *ngIf="user.id != user2.id">
+                                <li *ngIf="connexion==null">
+                                  <div *ngIf="cli===false">
+                                  <a (click)="create_connexion(user);cli=true" class="flww">
+                                    <i class="la la-plus"></i> Follow</a>
+                                  </div>
+
+                                </li>
+                                <div *ngIf="cli===true">
+                                  Invitation in progress
+                                </div>
+
+
+                                <div *ngIf="connexion!=null">
+                                    <li *ngIf="connexion.utilisateurByIdUtilisateur1.id == user2.id">
+
+                                        Invitation in progress
+                                    </li>
+                                      <div *ngIf="connexion.utilisateurByIdUtilisateur1.id != user2.id">
+                                        <li *ngIf="connexion.ajout==null">
+                                          <div *ngIf="cli2===false">
+                                        <a (click)="update_Connexion();cli2=true;" class="flww">
+
+                                           <i class="la la-plus"></i> Accept </a>
+                                          </div>
+                                        </li>
+                                      </div>
+                                </div>
+
+                          </div>
+
+
+
+
+
+                      <ul class="flw-status">
+
+                        <li>
+                          <span>Following</span>
+
+                          <b> {{number_follwing_fun(connexions)}}  </b>
+                        </li>
+                        <li>
+                          <span>Followers</span>
+
+                          <b> {{number_follwers_fun(connexions2)}}</b>
+                        </li>
+
+
+                      </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                  </ul>
+                </div><!--user_pro_status end-->
+
+              </div><!--user_profile end-->
+              <div class="right-sidebar">
+                <div class="message-btn">
+                  <a [routerLink] ="['/messages']"title=""><i class="fa fa-envelope"></i> Message</a>
+                </div>
+              </div><!--left-sidebar end-->
+            </div><!--main-left-sidebar end-->
+          </div>
+          <div class="col-lg-9">
+            <div class="main-ws-sec">
+              <div class="user-tab-sec">
+
+                <h3 > {{user.prenom}} {{user.nom}}</h3>
+                <div class="star-descp">
+                  <span>{{user.titre_profil}} </span>
+                </div><!--star-descp end-->
+                <div class="tab-feed">
+                  <ul>
+                    <li data-tab="feed-dd" class="active">
+                      <a href="" title="">
+                        <img src="/assets/images/ic1.png" alt="">
+                        <span>Feed</span>
+                      </a>
+                    </li>
+                    <li data-tab="info-dd" >
+                      <a href="" title="">
+                        <img src="/assets/images/ic2.png" alt="">
+                        <span>Info</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div><!-- tab-feed end-->
+              </div><!--user-tab-sec end-->
+              <div class="product-feed-tab current" id="feed-dd">
+                <div class="posts-section">
+                  <div *ngFor="let publication of publications| orderBy" >
+                    <div class="posts-section" style="padding-bottom: 30px;" >
+                      <div class="posty">
+                        <div class="post-bar no-margin">
+                          <div class="post_topbar">
+                            <div class="usy-dt">
+                              <div class="user-picy">
+                                <img src="{{publication.utilisateur.image_path}}" alt="">
+                              </div>
+                              <div class="usy-name">
+                                <h3>{{publication.utilisateur.prenom}} {{publication.utilisateur.nom}}</h3>
+                                <span><img src="/assets/images/clock.png" alt=""> {{ publication.date | date }}</span>
+                              </div>
+                            </div>
+
+
+                            <div *ngIf="id_user===current_user">
+
+                              <div class="ed-opts">
+                                <a title="" class="ed-opts-open"><i class="la la-ellipsis-v"></i></a>
+
+                                <ul class="ed-options m-0 p-0 list-group">
+                                  <li class="p-2 m-0 list-group-item-action"><a (click)="delete_postulation(publication)" title="Delete">Delete</a></li>
+                                  <li class="p-2 m-0 list-group-item-action"><a (click)="toggle(publication)" title="Update">Update</a></li>
+                                </ul>
+
+                              </div>
+                            </div>
+
+
+
+                          </div>
+
+
+
+                          <div class="job_descp">
+
+
+                            <div *ngIf="show && !(publication.id!==idupdate)">
+                              <form [formGroup]="postForm2">
+                                <div class="p-1">
+                                  <textarea class="form-control rounded-0" value="{{publication.contenu | emojify }}" (keydown.enter)="update_postulation(publication)" formControlName="contenu" style="border: 0px;resize:none;" rows="3"></textarea>
+                                </div>
+                              </form>
+                            </div>
+
+
+                            <div *ngIf="!show || !(publication.id===idupdate)" >
+                              <p>{{publication.contenu | emojify }}</p>
+                            </div>
+
+                          </div>
+
+
+
+
+
+                          <app-like [childMessage]="publication.id" ></app-like>
+                        </div><!--post-bar end-->
+                        <app-commentaire [childMessage]="publication.id" ></app-commentaire>
+                      </div>
+
+
+                    </div>
+                  </div>
+                </div>
+              </div><!--product-feed-tab end-->
+
+
+
+              <div class="product-feed-tab" id="info-dd">
+
+          <!--      <div *ngIf="user.description==null">
+                  <div class="user-profile-ov">
+                      <h3>Overview</h3>
+                      <button (click)="clickedUserDescription=true"  class="btn btn-primary">Add</button>
+                    <form [formGroup]="postForm"  >
+                      <div class="form-group">
+                        <div   *ngIf="clickedUserDescription===true">
+                          <input class="form-control" formControlName="UserDescription"   type="text" id="UserDescription" name="UserDescription">
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-success pull-right" >Save</button> <!-- (click)="update_UserDescription(user);clickedUserDescription=false"
+                    </form>
+                  </div>
+                </div>
+
+                    <div *ngIf="user.description">
+                      <div class="user-profile-ov">
+                        <h3>Overview</h3>
+                        <button (click)="clickedUserDescription=true" class="btn btn-primary">Edit</button>
+                          <form [formGroup]="postForm" >
+                            <div class="form-group">
+                              <div *ngIf="clickedUserDescription===false">
+                                <h3>   {{user.description}}</h3>
+                              </div>
+                              <div   *ngIf="clickedUserDescription===true" >
+                                  <input type="text" class="form-control" id="NewUserDescription" formControlName="NewUserDescription"  placeholder="description" value={{user.description}}>
+                              </div>
+                            </div>
+                            <button type="submit" class="btn btn-success pull-right" >Save</button>
+                      </div>
+                    </div>
+
+-->
+
+
+                <div *ngIf="experience?.length > 0" >
+                  <div class="user-profile-ov">
+
+                    <h3>Experience</h3>
+                    <div *ngIf="id_user===current_user">
+                    <button (click)="clickedExpAdd=true" class="btn btn-primary">Add</button>
+                    </div>
+                    <div *ngIf="clickedExpAdd===true">
+                      <div>
+                        <form [formGroup]="postForm" (ngSubmit)="create_experience()">
+                          <div class="form-group">
+                            <div   *ngIf="clickedExpAdd===true">
+                              <label for="cause">Experience:</label>
+                              <input class="form-control"   formControlName="cause" placeholder="experience" name="cause"  id="cause">
+                            </div>
+                          </div>
+
+
+
+                          <div class="form-group">
+                            <div   *ngIf="clickedExpAdd===true">
+                              <label for="role">Title:</label>
+                              <input class="form-control"   formControlName="role" placeholder="title" name="role"  id="role">
+                            </div>
+                          </div>
+
+
+
+
+
+                          <div class="form-group">
+                            <div   *ngIf="clickedExpAdd===true">
+                              <label for="descriptionExp">Description:</label>
+                              <input class="form-control"   formControlName="descriptionExp" placeholder="description" name="descriptionExp"  id="descriptionExp">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div   *ngIf="clickedExpAdd===true">
+                              <label for="dateDebutExp">Start date:</label>
+                              <br>
+                              <input class="form-control"  formControlName="dateDebutExp"  type="date" id="dateDebutExp" name="dateDebutExp"
+                                     min="2013-01-01" max="2020-12-31">
+                            </div>
+                          </div>
+
+                          <div class="form-group">
+                            <div   *ngIf="clickedExpAdd===true">
+                              <label for="dateFinExp">End date:</label>
+                              <br>
+                              <input class="form-control" formControlName="dateFinExp"   type="date" id="dateFinExp" name="dateFinExp"
+                                     min="2013-01-01" max="2020-12-31">
+                            </div>
+                          </div>
+
+                          <button type="submit" class="btn btn-success pull-right" (click)="create_experience(experience);clickedExpAdd=false">Save</button>
+                        </form>
+                      </div>
+                    </div>
+                    <br>
+                    <br>
+                    <tr *ngFor="let exp of experience">
+                      <div *ngIf="id_user===current_user">
+                      <button (click)="clickedExpEdit=true;experience_cli(exp)"  class="btn btn-primary">Edit</button>
+                      </div>
+
+                      <div>
+                        <p> <td> Experience : </td><td>{{exp.cause}} </td></p>
+                        <p><td> Title  : </td><td>{{exp.role}} </td></p>
+                        <p><td> Description  : </td><td> {{exp.description}} </td></p>
+                        <p> <td> Start Date  : </td><td> {{exp.dateDebut}} </td></p>
+                        <p> <td> End Date  : </td><td> {{exp.dateFin}} </td></p>
+                        <br>
+                      </div>
+
+
+                      <div *ngIf="clickedExpEdit===true" >
+                        <div>
+                          <form [formGroup]="postForm" (ngSubmit)="update_experience(exp)">
+                            <div class="form-group">
+                              <div *ngIf="clickedExpEdit===false">
+                                <h3>   {{exp.cause}}</h3>
+                              </div>
+                              <div   *ngIf="clickedExpEdit===true && experience_clicked==exp" >
+                                <label for="cause">Experience:</label>
+
+                                <input type="text" class="form-control" id="Newcause" formControlName="Newcause"  placeholder="experience" ngModel={{exp.cause}}>
+                              </div>
+                            </div>
+
+
+                            <div class="form-group">
+                              <div *ngIf="clickedExpEdit===false">
+                                <h3>   {{exp.role}}</h3>
+                              </div>
+                              <div *ngIf="clickedExpEdit===true && experience_clicked==exp">
+                                <label for="role">Title</label>
+
+                                <input type="text" class="form-control" id="Newrole" formControlName="Newrole"  placeholder="title" ngModel={{exp.role}}>
+                              </div>
+                            </div>
+
+
+
+
+                            <div class="form-group">
+                              <div *ngIf="clickedExpEdit===false">
+                                <h3>   {{exp.description}}</h3>
+                              </div>
+                              <div *ngIf="clickedExpEdit===true && experience_clicked==exp">
+                                <label for="descriptionExp">Description:</label>
+                                <input type="text" class="form-control" id="NewdescriptionExp" formControlName="NewdescriptionExp"  placeholder="description" ngModel={{exp.description}}>
+                              </div>
+
+                            </div>
+
+
+
+
+                            <div class="form-group">
+                              <div *ngIf="clickedExpEdit===false">
+                                <h3> {{exp.dateDebut}}</h3>
+                              </div>
+                              <div   *ngIf="clickedExpEdit===true && experience_clicked==exp">
+                                <label for="datedebutExp">Start date:</label>
+                                <input type="date" class="form-control" id="NewdatedebutExp"  formControlName="NewdatedebutExp"  placeholder="start date" ngModel={{exp.dateDebut}}>
+                              </div>
+                            </div>
+
+
+                            <div class="form-group">
+                              <div *ngIf="clickedExpEdit===false">
+                                <h3>   {{exp.dateFin}}</h3>
+                              </div>
+                              <div   *ngIf="clickedExpEdit===true && experience_clicked==exp">
+                                <label for="datefinExp">End date:</label>
+                                <input type="date" class="form-control" id="NewdatefinExp" formControlName="NewdatefinExp"  placeholder="end date" ngModel={{exp.dateFin}}>
+                              </div>
+                            </div>
+
+                            <div   *ngIf="clickedExpEdit===true && experience_clicked==exp">
+                            <button type="submit" class="btn btn-success pull-right" (click)="update_experience(exp);clickedExpEdit=false">Save</button>
+                            </div>
+                          </form>
+                        </div>
+
+                      </div>
+
+
+
+
+
+
+
+                  </div>
+                </div>   <!--user-profile-ov end-->
+
+                <div *ngIf="experience?.length === 0" >
+                  <div class="user-profile-ov">
+
+                    <h3>Experience</h3>
+                    <div *ngIf="id_user===current_user">
+                    <button (click)="clickedExpAddFirst=true" class="btn btn-primary">Add</button>
+                    </div>
+                    <br>
+                    <div *ngIf="clickedExpAddFirst===true">
+                      <div>
+                        <form [formGroup]="postForm" (ngSubmit)="First_create_experience()">
+                          <div class="form-group">
+                            <div   *ngIf="clickedExpAddFirst===true">
+                              <label for="Firstcause">Experience:</label>
+                              <input class="form-control"   formControlName="Firstcause" placeholder="experience" name="Firstcause"  id="Firstcause">
+                            </div>
+                          </div>
+
+
+
+                          <div class="form-group">
+                            <div   *ngIf="clickedExpAddFirst===true">
+                              <label for="Firstrole">Title:</label>
+                              <input class="form-control"   formControlName="Firstrole" placeholder="title" name="Firstrole"  id="Firstrole">
+                            </div>
+
+                          </div>
+
+
+                          <div class="form-group">
+                            <div   *ngIf="clickedExpAddFirst===true">
+                              <label for="FirstdescriptionExp">Description:</label>
+                              <input class="form-control"   formControlName="FirstdescriptionExp" placeholder="description" name="FirstdescriptionExp"  id="FirstdescriptionExp">
+                            </div>
+
+                          </div>
+
+                          <div class="form-group">
+                            <div   *ngIf="clickedExpAddFirst===true">
+                              <label for="FirstdateDebutExp">Start date:</label>
+                              <br>
+                              <input class="form-control"  formControlName="FirstdateDebutExp"  type="date" id="FirstdateDebutExp" name="FirstdateDebutExp"
+                                     min="2013-01-01" max="2020-12-31">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div   *ngIf="clickedExpAddFirst===true">
+                              <label for="FirstdateFinExp">End date:</label>
+                              <br>
+                              <input class="form-control" formControlName="FirstdateFinExp"   type="date" id="FirstdateFinExp" name="FirstdateFinExp"
+                                     min="2013-01-01" max="2020-12-31">
+                            </div>
+
+                          </div>
+
+                          <button type="submit" class="btn btn-success pull-right" (click)="First_create_experience(experience);clickedExpAddFirst=false">Save</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div *ngIf="formation?.length > 0" >
+                <div class="user-profile-ov">
+
+                  <h3>Education</h3>
+
+                  <div *ngIf="id_user===current_user">
+                  <button (click)="clickedFormAdd=true" class="btn btn-primary">Add</button>
+                  </div>
+                  <div *ngIf="clickedFormAdd===true">
+                    <div>
+                      <form [formGroup]="postForm" (ngSubmit)="create_formation()">
+                        <div class="form-group">
+                          <div   *ngIf="clickedFormAdd===true">
+                            <label for="ecole">School Name:</label>
+                            <input class="form-control"   formControlName="ecole" placeholder="school" name="ecole"  id="ecole">
+                          </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                          <div   *ngIf="clickedFormAdd===true">
+                            <label for="discipline">Discipline:</label>
+                            <input class="form-control"   formControlName="discipline" placeholder="domain" name="discipline"  id="discipline">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <div   *ngIf="clickedFormAdd===true">
+                            <label for="diplome">Degree:</label>
+                            <input class="form-control"   formControlName="diplome" placeholder="degree" name="diplome"  id="diplome">
+                          </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                          <div   *ngIf="clickedFormAdd===true">
+                            <label for="description">Description:</label>
+                            <input class="form-control"   formControlName="description" placeholder="description" name="description"  id="description">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <div   *ngIf="clickedFormAdd===true">
+                            <label for="dateDebut">Start date:</label>
+                            <br>
+                            <input class="form-control"  formControlName="dateDebut"  type="date" id="dateDebut" name="dateDebut"
+                                   min="2013-01-01" max="2020-12-31">
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <div   *ngIf="clickedFormAdd===true">
+                            <label for="dateFin">End date:</label>
+                            <br>
+                            <input class="form-control" formControlName="dateFin"   type="date" id="dateFin" name="dateFin"
+                                   min="2013-01-01" max="2020-12-31">
+                          </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success pull-right" (click)="create_formation(formation);clickedFormAdd=false">Save</button>
+                      </form>
+                    </div>
+                  </div>
+                  <br>
+                  <br>
+                  <tr *ngFor="let forma of formation | orderBy">
+                    <div *ngIf="id_user===current_user">
+                    <button (click)="clickedFormEdit=true;formation_cli(forma)" class="btn btn-primary">Edit</button>
+                    </div>
+                    <div>
+                      <p> <td> School Name : </td><td>{{forma.ecole}} </td></p>
+                      <p><td> Degree  : </td><td>{{forma.diplome}} </td></p>
+                      <p> <td> Discipline  : </td><td> {{forma.discipline}} </td></p>
+                      <p><td> Description  : </td><td> {{forma.description}} </td></p>
+                      <p> <td> Start Date  : </td><td> {{forma.dateDebut}} </td></p>
+                      <p> <td> End Date  : </td><td> {{forma.dateFin}} </td></p>
+                      <br>
+                    </div>
+
+
+                    <div *ngIf="clickedFormEdit===true" >
+                      <div>
+                        <form [formGroup]="postForm" (ngSubmit)="update_formation(forma)">
+                          <div class="form-group">
+                            <div *ngIf="clickedFormEdit===false">
+                              <h3>   {{forma.ecole}}</h3>
+                            </div>
+                            <div   *ngIf="clickedFormEdit===true && formation_clicked==forma" >
+                              <label for="ecole">School Name:</label>
+                              <input type="text" class="form-control" id="Newecole" formControlName="Newecole"  placeholder="School" ngModel={{forma.ecole}}>
+                            </div>
+                          </div>
+
+
+                          <div class="form-group">
+                            <div *ngIf="clickedFormEdit===false">
+                              <h3>   {{forma.diplome}}</h3>
+                            </div>
+                            <div *ngIf="clickedFormEdit===true && formation_clicked==forma">
+                              <label for="diplome">Degree:</label>
+                              <input type="text" class="form-control" id="Newdiplome"  formControlName="Newdiplome"  placeholder="degree" ngModel={{forma.diplome}}>
+                            </div>
+                          </div>
+
+
+                          <div class="form-group">
+                            <div *ngIf="clickedFormEdit===false">
+                              <h3>   {{forma.discipline}}</h3>
+                            </div>
+                            <div *ngIf="clickedFormEdit===true  && formation_clicked==forma">
+                              <label for="discipline">Discipline:</label>
+                              <input type="text" class="form-control" id="Newdiscipline"formControlName="Newdiscipline"  placeholder="discipline" ngModel={{forma.discipline}}>
+                            </div>
+
+                          </div>
+
+
+                          <div class="form-group">
+                            <div *ngIf="clickedFormEdit===false">
+                              <h3>   {{forma.description}}</h3>
+                            </div>
+                            <div *ngIf="clickedFormEdit===true  && formation_clicked==forma">
+                              <label for="description">Description:</label>
+                              <input type="text" class="form-control" id="Newdescription" formControlName="Newdescription"  placeholder="description" ngModel={{forma.description}}>
+                            </div>
+
+                          </div>
+
+
+
+
+                          <div class="form-group">
+                            <div *ngIf="clickedFormEdit===false">
+                              <h3>   {{forma.dateDebut}}</h3>
+                            </div>
+                            <div   *ngIf="clickedFormEdit===true  && formation_clicked==forma">
+                              <label for="dateDebut">Start date:</label>
+                              <input type="date" class="form-control" id="Newdatedebut"  formControlName="Newdatedebut"  placeholder="start date" ngModel={{forma.dateDebut}}>
+                            </div>
+                          </div>
+
+
+                          <div class="form-group">
+                            <div *ngIf="clickedFormEdit===false">
+                              <h3>   {{forma.dateFin}}</h3>
+                            </div>
+                            <div   *ngIf="clickedFormEdit===true  && formation_clicked==forma">
+                              <label for="dateFin">End date:</label>
+                              <input type="date" class="form-control" id="Newdatefin" formControlName="Newdatefin"  placeholder="end date" ngModel={{forma.dateFin}}>
+                            </div>
+                          </div>
+
+                          <div   *ngIf="clickedFormEdit===true  && formation_clicked==forma">
+                          <button type="submit" class="btn btn-success pull-right" (click)="update_formation(forma);clickedFormEdit=false">Save</button>
+                          </div>
+                        </form>
+                      </div>
+
+                    </div>
+
+
+
+
+
+
+                </div>
+                </div>   <!--user-profile-ov end-->
+
+           <div *ngIf="formation?.length === 0" >
+             <div class="user-profile-ov">
+
+                      <h3>Education</h3>
+               <div *ngIf="id_user===current_user">
+                      <button (click)="clickedFormAddFirst=true" class="btn btn-primary">Add</button>
+               </div>
+                      <br>
+                    <div *ngIf="clickedFormAddFirst===true">
+                      <div>
+                            <form [formGroup]="postForm" (ngSubmit)="First_create_formation()">
+                              <div class="form-group">
+                                <div   *ngIf="clickedFormAddFirst===true">
+                                  <label for="Firstecole">School Name:</label>
+                                  <input class="form-control"   formControlName="Firstecole" placeholder="school" name="Firstecole"  id="Firstecole">
+                                </div>
+                              </div>
+
+
+
+                              <div class="form-group">
+                                <div   *ngIf="clickedFormAddFirst===true">
+                                  <label for="Firstdiscipline">Discipline:</label>
+                                  <input class="form-control"   formControlName="Firstdiscipline" placeholder="domain" name="Firstdiscipline"  id="Firstdiscipline">
+                                </div>
+
+                              </div>
+
+                              <div class="form-group">
+                                <div   *ngIf="clickedFormAddFirst===true">
+                                  <label for="Firstdiplome">Degree:</label>
+                                  <input class="form-control"   formControlName="Firstdiplome" placeholder="degree" name="Firstdiplome"  id="Firstdiplome">
+                                </div>
+
+                              </div>
+                              <div class="form-group">
+                                <div   *ngIf="clickedFormAddFirst===true">
+                                  <label for="Firstdescription">Description:</label>
+                                  <input class="form-control"   formControlName="Firstdescription" placeholder="description" name="Firstdescription"  id="Firstdescription">
+                                </div>
+
+                              </div>
+
+                              <div class="form-group">
+                                <div   *ngIf="clickedFormAddFirst===true">
+                                  <label for="FirstdateDebut">Start date:</label>
+                                  <br>
+                                  <input class="form-control"  formControlName="FirstdateDebut"  type="date" id="FirstdateDebut" name="FirstdateDebut"
+                                         min="2013-01-01" max="2020-12-31">
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <div   *ngIf="clickedFormAddFirst===true">
+                                  <label for="FirstdateFin">End date:</label>
+                                  <br>
+                                  <input class="form-control" formControlName="FirstdateFin"   type="date" id="FirstdateFin" name="FirstdateFin"
+                                         min="2013-01-01" max="2020-12-31">
+                                </div>
+
+                              </div>
+
+                              <button type="submit" class="btn btn-success pull-right" (click)="First_create_formation(formation);clickedFormAddFirst=false">Save</button>
+                            </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div *ngIf="langue?.length > 0" >
+                  <div class="user-profile-ov">
+
+                    <h4>Accomplishments</h4>
+
+                    <h3>Languages</h3>
+                    <div *ngIf="id_user===current_user">
+                    <button (click)="clickedLangAdd=true" class="btn btn-primary">Add</button>
+                    </div>
+                    <div *ngIf="clickedLangAdd===true">
+                      <div>
+                        <form [formGroup]="postForm" (ngSubmit)="create_langue()">
+                          <div class="form-group">
+                            <div   *ngIf="clickedLangAdd===true">
+                              <label for="lang">Language:</label>
+                              <input class="form-control"   formControlName="lang" placeholder="language" name="lang"  id="lang">
+                            </div>
+                          </div>
+
+
+
+                          <div class="form-group">
+                            <div   *ngIf="clickedLangAdd===true">
+                              <label for="niveau">Level:</label>
+                              <input class="form-control"   formControlName="niveau" placeholder="level" name="niveau"  id="niveau">
+                            </div>
+                          </div>
+                          <button type="submit" class="btn btn-success pull-right" (click)="create_langue(langue);clickedLangAdd=false">Save</button>
+                        </form>
+                      </div>
+                    </div>
+                    <br>
+                    <br>
+                    <tr *ngFor="let lang of langue | orderBy">
+                      <div *ngIf="id_user===current_user">
+                      <button (click)="clickedLangEdit=true;langue_cli(lang)" class="btn btn-primary">Edit</button>
+                      </div>
+                      <div>
+                        <p> <td> Language : </td><td>{{lang.lang}} </td></p>
+                        <p><td> Level : </td><td>{{lang.niveau}} </td></p>
+                        <br>
+                      </div>
+
+
+                      <div *ngIf="clickedLangEdit===true" >
+                        <div>
+                          <form [formGroup]="postForm" (ngSubmit)="update_langue(lang)">
+                            <div class="form-group">
+                              <div *ngIf="clickedLangEdit===false">
+                                <h3>   {{lang.lang}}</h3>
+                              </div>
+                              <div   *ngIf="clickedLangEdit===true && langue_clicked==lang" >
+                                <label for="lang">Language:</label>
+                                <input type="text" class="form-control" id="Newlang" formControlName="Newlang"  placeholder="language" ngModel={{lang.lang}}>
+                              </div>
+                            </div>
+
+
+                            <div class="form-group">
+                              <div *ngIf="clickedLangEdit===false">
+                                <h3>   {{lang.niveau}}</h3>
+                              </div>
+                              <div *ngIf="clickedLangEdit===true && langue_clicked==lang">
+                                <label for="niveau">Level:</label>
+                                <input type="text" class="form-control" id="Newdniveau"  formControlName="Newniveau"  placeholder="level" ngModel={{lang.niveau}}>
+                              </div>
+                            </div>
+
+                            <div *ngIf="clickedLangEdit===true && langue_clicked==lang">
+                            <button type="submit" class="btn btn-success pull-right" (click)="update_langue(lang);clickedLangEdit=false">Save</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                  </div>
+                </div>   <!--user-profile-ov end-->
+
+
+
+
+                <div *ngIf="langue?.length === 0" >
+                  <div class="user-profile-ov">
+
+                    <h4>Accomplishments</h4>
+
+                    <h3>Languages</h3>
+                    <div *ngIf="id_user===current_user">
+                    <button (click)="clickedLangAddFirst=true" class="btn btn-primary">Add</button>
+                    </div>
+                    <br>
+                    <div *ngIf="clickedLangAddFirst===true">
+                      <div>
+                        <form [formGroup]="postForm" (ngSubmit)="First_create_langue()">
+                          <div class="form-group">
+                            <div   *ngIf="clickedLangAddFirst===true">
+                              <label for="Firstlang">Language:</label>
+                              <input class="form-control"   formControlName="Firstlang" placeholder="language" name="Firstlang"  id="Firstlang">
+                            </div>
+                          </div>
+
+
+
+                          <div class="form-group">
+                            <div   *ngIf="clickedLangAddFirst===true">
+                              <label for="Firstniveau">Level:</label>
+                              <input class="form-control"   formControlName="Firstniveau" placeholder="level" name="Firstniveau"  id="Firstniveau">
+                            </div>
+                          </div>
+
+                          <button type="submit" class="btn btn-success pull-right" (click)="First_create_langue(langue);clickedLangAddFirst=false">Save</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="competence?.length > 0" >
+                  <div class="user-profile-ov">
+
+                    <h3>Competence</h3>
+                    <div *ngIf="id_user===current_user">
+                    <button (click)="clickedCompAdd=true" class="btn btn-primary">Add</button>
+                    </div>
+                    <div *ngIf="clickedCompAdd===true">
+                      <div>
+                        <form [formGroup]="postForm" (ngSubmit)="create_competence()">
+                          <div class="form-group">
+                            <div   *ngIf="clickedCompAdd===true">
+                              <label for="skill">Skill Name:</label>
+                              <input class="form-control"   formControlName="skill" placeholder="skill name" name="skill"  id="skill">
+                            </div>
+                          </div>
+
+
+
+                          <button type="submit" class="btn btn-success pull-right" (click)="create_competence(competence);clickedCompAdd=false">Save</button>
+                        </form>
+                      </div>
+                    </div>
+
+                    <br>
+                    <br>
+                    <tr *ngFor="let comp of competence ">
+                      <div *ngIf="id_user===current_user">
+                      <button (click)="clickedCompEdit=true;competence_cli(comp)"  class="btn btn-primary">Edit</button>
+                      </div>
+                      <br>
+                      <br>
+                      <ul>
+                        <li><a  title="">{{comp.nomCompetence}}</a></li>
+                      </ul>
+
+                      <div *ngIf="clickedCompEdit===true" >
+                        <div>
+                          <form [formGroup]="postForm" (ngSubmit)="update_competence(comp)">
+                            <div class="form-group">
+                              <div *ngIf="clickedCompEdit===false">
+                                <h3> {{comp.nomCompetence}}</h3>
+                              </div>
+                              <div   *ngIf="clickedCompEdit===true && competence_clicked==comp" >
+                                <label for="skill">Skill Name:</label>
+                                <input type="text" class="form-control" id="Newskill" formControlName="Newskill"  placeholder="skill name" ngModel={{comp.nomCompetence}}>
+                              </div>
+                            </div>
+                            <div   *ngIf="clickedCompEdit===true && competence_clicked==comp" >
+                            <button type="submit" class="btn btn-success pull-right" (click)="update_competence(comp);clickedCompEdit=false">Save</button>
+                            </div>
+                          </form>
+                        </div>
+
+                      </div>
+
+
+
+                  </div>
+                </div>   <!--user-profile-ov end-->
+
+
+
+                <div *ngIf="competence?.length === 0" >
+                  <div class="user-profile-ov">
+
+                    <h3>Skill</h3>
+                    <div *ngIf="id_user===current_user">
+                    <button (click)="clickedCompAddFirst=true" class="btn btn-primary">Add</button>
+                    </div>
+                    <br>
+                    <div *ngIf="clickedCompAddFirst===true">
+                      <div>
+                        <form [formGroup]="postForm" (ngSubmit)="First_create_competence()">
+                          <div class="form-group">
+                            <div   *ngIf="clickedCompAddFirst===true">
+                              <label for="Firstskill">Skill Name:</label>
+                              <input class="form-control"   formControlName="Firstskill" placeholder="skill name" name="Firstskill"  id="Firstskill">
+                            </div>
+                          </div>
+                          <button type="submit" class="btn btn-success pull-right" (click)="First_create_competence(competence);clickedCompAddFirst=false">Save</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+
+
+
+            </div><!--user-profile-ov end-->
+              </div><!--product-feed-tab end-->
+
+
+
+
+
+
+
+
+
+
+            </div><!--main-ws-sec end-->
+          </div>
+
+
+
+
+
+        </div>
+      </div><!-- main-section-data end-->
+
+
+</main>

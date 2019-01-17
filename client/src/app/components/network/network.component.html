@@ -1,0 +1,107 @@
+<app-header></app-header>
+<section class="companies-info">
+  <div class="container">
+    <div class="main-section-data">
+      <div class="row">
+
+        <div class="col-lg-3 col-md-4 pd-left-none no-pd">
+          <div class="main-left-sidebar no-margin">
+            <div class="user-data full-width">
+
+              <div class="user-profile">
+                <div class="username-dt">
+                  <div class="usr-pic">
+                    <img src={{user.image_path}} alt="">
+                  </div>
+                </div>
+                <div class="user-specs">
+                  <h3> {{user.prenom}} {{user.nom}}</h3>
+                  <span>{{user.titre_profil}} </span>
+                </div>
+              </div>
+              <ul class="user-fw-status">
+                <!--
+                <li>
+                  <h4>Following</h4>
+                  <span>34</span>
+                </li>
+                <li>
+                  <h4>Followers</h4>
+                  <span>155</span>
+                </li>
+                -->
+                <li>
+                  <a [routerLink] ="['/profile',{'id': user.id}]" title="">View Profile</a>
+                </li>
+              </ul>
+            </div><!--user-data end-->
+            <div class="suggestions full-width">
+              <div class="sd-title">
+                <h3>Suggestions</h3>
+                <i class="la la-ellipsis-v"></i>
+              </div><!--sd-title end-->
+              <div class="suggestions-list">
+
+                <!--<div class="suggestion-usd" *ngFor="let notFriend of notFriends">
+                  <img src="/assets/images/resources/s1.png" alt="">
+                  <div class="sgt-text">
+                    &lt;!&ndash; a href to the persons profile &ndash;&gt;
+                    <h4><a [routerLink] = "['/profile',{'id': notFriend.id}]">{{notFriend.prenom}} {{notFriend.nom}} </a> </h4>
+                    &lt;!&ndash;<h4><a href="http://localhost:4200/profile?id={{notFriend.id}}">{{notFriend.prenom}} {{notFriend.nom}} </a> </h4>&ndash;&gt;
+                    <span>{{notFriend.titreProfil}}</span>
+                  </div>
+                  &lt;!&ndash; <span><i class="la la-plus"></i></span> &ndash;&gt;
+                </div>-->
+
+                <div class="view-more">
+                  <a href="#" title="">View More</a>
+                </div>
+              </div><!--suggestions-list end-->
+            </div><!--suggestions end-->
+          </div><!--main-left-sidebar end-->
+        </div>
+        <div class="col-lg-8 no-pd">
+          <div class="company-title">
+            <h3>All Connexion</h3>
+          </div>
+
+          <div class="companies-list">
+            <div class="row">
+                <div class="col-lg-4 col-md-5 col-sm-6" *ngFor="let connexion of connexions">
+                  <div class="company_profile_info">
+                    <div class="company-up-info">
+                      <img src={{connexion.utilisateurByIdUtilisateur2.image_path}} alt="">
+                      <h3>{{connexion.utilisateurByIdUtilisateur2.prenom}} {{connexion.utilisateurByIdUtilisateur2.nom}}</h3>
+                      <h4>{{connexion.utilisateurByIdUtilisateur2.titre_profil}}</h4>
+                      <ul>
+                       <!-- <li><a href="#" title="" class="follow">Follow</a></li> -->
+                        <li><a (click)="delete_connexion(connexion)" class="follow">Delete friend</a></li>
+                        <li><a href="#" title="" class="message-us"><i class="fa fa-envelope"></i></a></li>
+                      </ul>
+                    </div>
+                    <a [routerLink] ="['/profile',{'id': connexion.id}]" title="" class="view-more-pro">View Profile</a>
+                  </div><!--company_profile_info end-->
+                </div>
+
+              <div class="col-lg-4 col-md-5 col-sm-6" *ngFor="let connexion of connexions2">
+                <div class="company_profile_info">
+                  <div class="company-up-info">
+                    <img src={{connexion.utilisateurByIdUtilisateur1.image_path}} alt="">
+                    <h3>{{connexion.utilisateurByIdUtilisateur1.prenom}} {{connexion.utilisateurByIdUtilisateur1.nom}}</h3>
+                    <h4>{{connexion.utilisateurByIdUtilisateur1.titre_profil}}</h4>
+                    <ul>
+                       <li><a (click)="delete_connexion(connexion)" class="follow">Delete friend</a></li>
+                      <li><a href="#" title="" class="message-us"><i class="fa fa-envelope"></i></a></li>
+                    </ul>
+                  </div>
+                  <a [routerLink] ="['/profile',{'id': connexion.id}]" title="" class="view-more-pro">View Profile</a>
+                </div><!--company_profile_info end-->
+              </div>
+
+            </div>
+          </div><!--companies-list end-->
+        </div>
+      </div>
+    </div>
+  </div>
+</section><!--companies-info end-->

@@ -1,0 +1,138 @@
+<app-navuser></app-navuser>
+<div class="wrapper">
+  <div class="sign-in-page">
+    <div class="signin-popup">
+      <div class="signin-pop" style="margin-bottom: 100px">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="cmp-info">
+              <div class="cm-logo">
+                <img src="/assets/images/logo_black.png" height="50" alt="">
+                <br/>
+                <p>Linkedin2.0,  is a global freelancing platform and social networking where businesses and independent professionals connect and collaborate remotely</p>
+              </div><!--cm-logo end-->
+              <img src="/assets/images/cm-main-img.png" alt="">
+            </div><!--cmp-info end-->
+          </div>
+          <div class="col-lg-6">
+            <div class="login-sec">
+              <ul class="sign-control">
+                <li data-tab="tab-1" class="current"><a href="#" title="">Sign in</a></li>
+                <li data-tab="tab-2"><a href="#" title="">Sign up</a></li>
+              </ul>
+              <div class="sign_in_sec current" id="tab-1">
+
+                <h3>Sign in</h3>
+                <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                  <div class="row">
+                    <div class="col-lg-12 no-pdd">
+                      <div class="sn-field">
+                        <input type="text" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" placeholder="Email...">
+                        <i class="la la-user"></i>
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                          <div *ngIf="f.email.errors.required">Email is required</div>
+                        </div>
+                      </div><!--sn-field end-->
+                    </div>
+                    <div class="col-lg-12 no-pdd">
+                      <div class="sn-field">
+                        <input type="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" placeholder="Password">
+                        <i class="la la-lock"></i>
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                          <div *ngIf="f.password.errors.required">Password is required</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 no-pdd">
+                      <div class="checky-sec">
+                        <div class="fgt-sec">
+                          <input type="checkbox" name="cc" id="c1">
+                          <label for="c1">
+                            <span></span>
+                          </label>
+                          <small>Remember me</small>
+                        </div><!--fgt-sec end-->
+                        <a href="#" title="">Forgot Password?</a>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 no-pdd">
+                      <button type="submit" [disabled]="loading" value="submit">Sign in</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="sign_in_sec" id="tab-2">
+                <div class="dff-tab current" id="tab-3">
+                  <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+                  <form [formGroup]="RegisterForm" (ngSubmit)="onRegister()">
+                    <div class="row">
+                      <div class="col-lg-12 no-pdd">
+                        <div class="sn-field">
+                          <input type="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && ff.email.errors }" placeholder="Email...">
+                          <i class="la la-briefcase"></i>
+                          <div *ngIf="submitted && ff.email.errors" class="invalid-feedback">
+                            <div *ngIf="ff.email.errors.required">Check your email</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 no-pdd">
+                        <div class="sn-field">
+                          <input type="text" formControlName="prenom" [ngClass]="{ 'is-invalid': submitted && ff.prenom.errors }" placeholder="Prenom">
+                          <i class="la la-user"></i>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 no-pdd">
+                        <div class="sn-field">
+                          <input type="text" formControlName="nom" [ngClass]="{ 'is-invalid': submitted && ff.nom.errors }" placeholder="Nom">
+                          <i class="la la-user"></i>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 no-pdd">
+                        <div class="sn-field">
+                          <input type="text" formControlName="pays" [ngClass]="{ 'is-invalid': submitted && ff.pays.errors }" placeholder="Pays">
+                          <i class="la la-globe"></i>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 no-pdd">
+                        <div class="sn-field">
+                          <input type="text" formControlName="titre" [ngClass]="{ 'is-invalid': submitted && ff.titre.errors }" placeholder="titre">
+                          <i class="la la-code-fork"></i>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 no-pdd">
+                        <div class="sn-field">
+                          <input type="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && ff.password.errors }" placeholder="Password">
+                          <i class="la la-lock"></i>
+                          <div *ngIf="submitted && ff.password.errors" class="invalid-feedback">
+                            <div *ngIf="ff.password.errors.required">Password is required</div>
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="col-lg-12 no-pdd">
+                        <div class="checky-sec st2">
+                          <div class="fgt-sec">
+                            <input type="checkbox" name="cc" id="c2">
+                            <label for="c2">
+                              <span></span>
+                            </label>
+                            <small>Yes, I understand and agree to the Linkedin2.0 Terms & Conditions.</small>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 no-pdd">
+                        <button type="submit" [disabled]="!RegisterForm.valid" value="submit">Get Started</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
