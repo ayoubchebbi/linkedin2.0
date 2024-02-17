@@ -1,3 +1,6 @@
+https://gist.github.com/darkacer/0636381626b7dd93fed3b81f76912cbf?fbclid=IwAR0MqDqhavn7zxbbby0qZ5rcx9L7e-OcPKhPTtl2sBkEKibXkPe_h2kiyHI
+https://www.absyz.com/how-to-read-excel-data-using-lwc-salesforce/?fbclid=IwAR0Cml_Bk4TMIggWxkFPpEQdrFDBYYwr9cE7NfEcED-4OvBOPLosynWPpq0
+
 # linkedin2.0
 
 -----------------------------------------------------------------------------------------------------------------------------
