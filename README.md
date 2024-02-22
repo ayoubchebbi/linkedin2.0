@@ -1,4 +1,8 @@
-  flattenObject(obj, parentKey = '') {
+get jsonList() {
+        return this.flattenObject(this.record);
+    }
+
+    flattenObject(obj, parentKey = '') {
         let jsonList = [];
         for (let key in obj) {
             if (obj.hasOwnProperty(key)) {
