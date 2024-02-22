@@ -1,22 +1,25 @@
-get jsonList() {
-        return this.flattenObject(this.record);
-    }
+import { LightningElement, wire } from 'lwc';
+import { getObjectInfo } from 'lightning/uiObjectInfoApi';
+import MY_CUSTOM_METADATA_OBJECT from '@salesforce/schema/MyCustomMetadata__mdt';
 
-    flattenObject(obj, parentKey = '') {
-        let jsonList = [];
-        for (let key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                let value = obj[key];
-                if (typeof value === 'object') {
-                    jsonList.push(...this.flattenObject(value, key));
-                } else {
-                    let field = parentKey ? `${parentKey}.${key}` : key;
-                    jsonList.push({ field: field, value: value });
-                }
+export default class MyComponent extends LightningElement {
+    metadataValues = [];
+
+    @wire(getObjectInfo, { objectApiName: MY_CUSTOM_METADATA_OBJECT })
+    objectInfo;
+
+    connectedCallback() {
+        if (this.objectInfo.data) {
+            const metadataFields = this.objectInfo.data.fields;
+            if (metadataFields) {
+                const field1Values = metadataFields.Field1__c.picklistValues;
+                const field2Values = metadataFields.Field2__c.picklistValues;
+                this.metadataValues = [...field1Values, ...field2Values];
             }
         }
-        return jsonList;
     }
+}
+
 
 # linkedin2.0
 
