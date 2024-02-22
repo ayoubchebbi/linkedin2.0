@@ -1,8 +1,18 @@
-https://gist.github.com/darkacer/0636381626b7dd93fed3b81f76912cbf?fbclid=IwAR0MqDqhavn7zxbbby0qZ5rcx9L7e-OcPKhPTtl2sBkEKibXkPe_h2kiyHI
-
-
-
-https://www.absyz.com/how-to-read-excel-data-using-lwc-salesforce/?fbclid=IwAR0Cml_Bk4TMIggWxkFPpEQdrFDBYYwr9cE7NfEcED-4OvBOPLosynWPpq0
+  flattenObject(obj, parentKey = '') {
+        let jsonList = [];
+        for (let key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                let value = obj[key];
+                if (typeof value === 'object') {
+                    jsonList.push(...this.flattenObject(value, key));
+                } else {
+                    let field = parentKey ? `${parentKey}.${key}` : key;
+                    jsonList.push({ field: field, value: value });
+                }
+            }
+        }
+        return jsonList;
+    }
 
 # linkedin2.0
 
