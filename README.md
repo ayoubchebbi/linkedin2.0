@@ -1,26 +1,17 @@
-import { LightningElement, wire } from 'lwc';
-import { getObjectInfo } from 'lightning/uiObjectInfoApi';
-import MY_CUSTOM_METADATA_OBJECT from '@salesforce/schema/MyCustomMetadata__mdt';
 
-export default class MyComponent extends LightningElement {
-    metadataValues = [];
-
-    @wire(getObjectInfo, { objectApiName: MY_CUSTOM_METADATA_OBJECT })
-    objectInfo;
-
-    connectedCallback() {
-        if (this.objectInfo.data) {
-            const metadataFields = this.objectInfo.data.fields;
-            if (metadataFields) {
-                const field1Values = metadataFields.Field1__c.picklistValues;
-                const field2Values = metadataFields.Field2__c.picklistValues;
-                this.metadataValues = [...field1Values, ...field2Values];
-            }
-        }
+handleFileChange(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+            // Process the workbook data
+            // Example: console.log(workbook.SheetNames, XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]));
+        };
+        reader.readAsArrayBuffer(file);
     }
 }
-
-
 # linkedin2.0
 
 -----------------------------------------------------------------------------------------------------------------------------
