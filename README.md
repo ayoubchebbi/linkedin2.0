@@ -1,17 +1,36 @@
+Objet : Clarification et Points à Tester - API Data Logs et Autres Champs Techniques
 
-handleFileChange(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const data = new Uint8Array(e.target.result);
-            const workbook = XLSX.read(data, { type: 'array' });
-            // Process the workbook data
-            // Example: console.log(workbook.SheetNames, XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]));
-        };
-        reader.readAsArrayBuffer(file);
-    }
-}
+Chers tous,
+
+J'espère que vous allez bien. Je souhaite clarifier quelques points importants concernant certains aspects techniques et champs spécifiques que nous avons rencontrés récemment, ainsi que partager nos prochaines étapes concernant les tests et les modifications à apporter.
+
+API Data Logs:
+
+L'objet API Data Logs est conçu principalement pour les développeurs, et il sert de point central pour stocker toutes les données fournies par KPMG.
+Cet objet a été créé de manière générique et peut potentiellement être utilisé dans d'autres contextes, en dehors de KPMG.
+Champ "Document Key":
+
+Ce champ est utilisé pour récupérer des documents binaires. Je suis un peu confus par la remarque mentionnant le document PDF 1.4 ou 1.7. Si quelqu'un peut fournir plus de clarté à ce sujet, cela serait grandement apprécié.
+Champ Final Kid:
+
+Après avoir effectué des vérifications sur toutes les données disponibles, je n'ai trouvé aucun "Final Kid" créé pour chaque KID request validé sur KID. Si quelqu'un a des informations supplémentaires à ce sujet, veuillez les partager.
+Champ Language:
+
+Il semble que la valeur sur ce champ soit en minuscules. Ceci est normal car la valeur est récupérée via KPMG et n'a aucun impact sur notre processus interne.
+Noms avec "_ ":
+
+J'ai demandé à l'équipe Salesforce de traiter le problème des noms avec des espaces remplacés par des underscores par défaut. Il y a un article disponible sur ce sujet qui pourrait être utile à consulter pour plus de détails.
+Noms avec des problèmes tels que "APIDATA":
+
+J'ai partagé l'architecture sur Confluence le 19/02 et je n'ai pas encore reçu de commentaires à ce sujet. Il est important que lorsque des documents sont partagés, ils soient examinés et des retours d'informations soient donnés si nécessaire.
+En conclusion, je souhaite entamer les tests sur la partie IM Library et KID Request en Full. Je serais reconnaissant si vous pouviez fournir des retours sur toute fonctionnalité qui ne fonctionnerait pas correctement. De plus, veuillez noter que la partie technique est gérée conjointement par l'équipe d'architecture et moi-même, et nous avons une réunion prévue à ce sujet aujourd'hui.
+
+En outre, j'ai l'intention de retirer certains accès aux champs techniques et de ne laisser que les champs nécessaires pour évaluer l'état de chaque partie. Si vous avez des questions ou des préoccupations supplémentaires, n'hésitez pas à les partager.
+
+Merci pour votre attention et votre collaboration.
+
+Cordialement,
+[Votre Nom]
 # linkedin2.0
 
 -----------------------------------------------------------------------------------------------------------------------------
